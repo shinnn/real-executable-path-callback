@@ -3,11 +3,11 @@
 [![NPM version](https://img.shields.io/npm/v/real-executable-path-callback.svg)](https://www.npmjs.com/package/real-executable-path-callback)
 [![Build Status](https://travis-ci.org/shinnn/real-executable-path-callback.svg?branch=master)](https://travis-ci.org/shinnn/real-executable-path-callback)
 [![Build status](https://ci.appveyor.com/api/projects/status/ap6060wrs8xlja88/branch/master?svg=true)](https://ci.appveyor.com/project/ShinnosukeWatanabe/real-executable-path-callback/branch/master)
-[![Coverage Status](https://img.shields.io/coveralls/shinnn/real-executable-path-callback.svg)](https://coveralls.io/r/shinnn/real-executable-path-callback)
-[![Dependency Status](https://img.shields.io/david/shinnn/real-executable-path-callback.svg?label=deps)](https://david-dm.org/shinnn/real-executable-path-callback)
-[![devDependency Status](https://img.shields.io/david/dev/shinnn/real-executable-path-callback.svg?label=devDeps)](https://david-dm.org/shinnn/real-executable-path-callback#info=devDependencies)
+[![Coverage Status](https://img.shields.io/coveralls/shinnn/real-executable-path-callback.svg)](https://coveralls.io/github/shinnn/real-executable-path-callback)
+[![Dependency Status](https://david-dm.org/shinnn/real-executable-path-callback.svg)](https://david-dm.org/shinnn/real-executable-path-callback)
+[![devDependency Status](https://david-dm.org/shinnn/real-executable-path-callback/dev-status.svg)](https://david-dm.org/shinnn/real-executable-path-callback#info=devDependencies)
 
-Callback-style version of [real-executable-path]:
+[Callback](http://thenodeway.io/posts/understanding-error-first-callbacks/)-style version of [real-executable-path]:
 
 > Find the first instance of an executable in the PATH, with expanding all symbolic links
 
@@ -16,11 +16,11 @@ const realExecutablePathCallback = require('real-executable-path-callback');
 const which = require('which');
 
 which('npm', (err, binPath) => {
-  binpath; //=> '/usr/local/bin/node'
+  binPath; //=> '/usr/local/bin/npm'
 });
 
 realExecutablePathCallback('npm', (err, binPath) => {
-  binpath; //=> '/usr/local/Cellar/node/4.2.1/bin/node'
+  binPath; //=> '/usr/local/lib/node_modules/npm/bin/npm-cli.js'
 });
 ```
 
