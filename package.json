@@ -5,9 +5,9 @@
   "repository": "shinnn/real-executable-path-callback",
   "author": "Shinnosuke Watanabe (https://github.com/shinnn)",
   "scripts": {
-    "pretest": "eslint --config @shinnn/node-legacy index.js test.js",
-    "test": "node --harmony_rest_parameters test.js",
-    "coverage": "node --harmony_rest_parameters node_modules/.bin/istanbul cover test.js"
+    "pretest": "eslint --config @shinnn/node index.js test.js",
+    "test": "node --strong_mode test.js",
+    "coverage": "node node_modules/.bin/istanbul cover test.js"
   },
   "license": "MIT",
   "files": [
@@ -28,13 +28,13 @@
     "asynchronously"
   ],
   "dependencies": {
-    "graceful-fs": "^4.1.2",
-    "which": "^1.2.0"
+    "graceful-fs": "^4.1.4",
+    "which": "^1.2.10"
   },
   "devDependencies": {
-    "@shinnn/eslint-config-node-legacy": "^1.0.0",
-    "eslint": "^1.8.0",
-    "istanbul": "^0.4.0",
-    "tape": "^4.2.2"
+    "@shinnn/eslint-config-node": "^2.0.0",
+    "eslint": "^2.12.0",
+    "istanbul": "^0.4.3",
+    "tape": "^4.5.1"
   }
 }

@@ -4,16 +4,18 @@
 */
 'use strict';
 
-var fs = require('graceful-fs');
-var which = require('which');
+const inspect = require('util').inspect;
 
-var optionErrorMsg = 'Expected a falsy value or an option object to be passed to `node-which` ' +
+const fs = require('graceful-fs');
+const which = require('which');
+
+const optionErrorMsg = 'Expected a falsy value or an option object to be passed to `node-which` ' +
                      'https://www.npmjs.com/package/which';
 
 module.exports = function realExecutablePathCallback(cmd, options, cb) {
   if (typeof cmd !== 'string') {
     throw new TypeError(
-      String(cmd) +
+      inspect(cmd) +
       ' is not a string. Expected a string of a specific executable name in the PATH.'
     );
   }
@@ -30,7 +32,7 @@ module.exports = function realExecutablePathCallback(cmd, options, cb) {
     options = {};
   } else if (options) {
     if (typeof options !== 'object') {
-      throw new TypeError(String(options) + ' is not an object. ' + optionErrorMsg + '.');
+      throw new TypeError(`${inspect(options)} is not an object. ${optionErrorMsg}.`);
     }
 
     if (Array.isArray(options)) {
@@ -45,10 +47,7 @@ module.exports = function realExecutablePathCallback(cmd, options, cb) {
   }
 
   if (typeof cb !== 'function') {
-    throw new TypeError(
-      String(cb) +
-      ' is not a function. Expected a callback function.'
-    );
+    throw new TypeError(`${inspect(cb)} is not a function. Expected a callback function.`);
   }
 
   which(cmd, options, function whichCallback(err, resolvedPaths) {
