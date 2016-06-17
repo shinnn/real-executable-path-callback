@@ -41,25 +41,17 @@ const realExecutablePathCallback = require('real-executable-path-callback');
 ### realExecutablePathCallback(*binName* [, *options*], *callback*)
 
 *binName*: `String` (an executable name in the PATH)  
-*options*: `Object`  
+*options*: `Object` ([`node-which` options](https://github.com/npm/node-which#options) except for `all`)  
 *callback*: `Function` (called after the path is resolved)
 
 It finds the first instance of the given executable in the [PATH](http://pubs.opengroup.org/onlinepubs/000095399/basedefs/xbd_chap08.html#tag_08_03) environment variable, expands all symbolic links and resolves the canonicalized absolute pathname.
 
-#### options
-
-All options except for `all` option are used as [`which`](https://github.com/npm/node-which) [options](https://github.com/npm/node-which#options), and `option.cache` is used as `cache` of [`fs.realpath`](https://nodejs.org/api/fs.html#fs_fs_realpath_path_cache_callback).
-
 ```javascript
 const realExecutablePathCallback = require('real-executable-path-callback');
 
-realExecutablePathCallback('foo', {
-  path: 'binaries',
-  cache: {
-    'binaries/foo': '/usr/local/lib/node_modules/foo/bin/foo'
-  }
-}, (err, resolvedPath) => {
-  resolvedPath; //=> '/usr/local/lib/node_modules/foo/bin/foo'
+realExecutablePathCallback('this_cmd_is_not_installed', err => {
+  err.message; //=> 'not found: this_cmd_is_not_installed'
+  err.code; //=> 'ENOENT'
 });
 ```
 

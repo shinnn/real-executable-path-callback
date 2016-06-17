@@ -56,6 +56,6 @@ module.exports = function realExecutablePathCallback(cmd, options, cb) {
       return;
     }
 
-    fs.realpath(resolvedPaths, options.cache, cb);
+    fs.realpath(resolvedPaths, cb);
   });
 };

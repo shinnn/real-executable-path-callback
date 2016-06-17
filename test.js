@@ -1,26 +1,30 @@
-'use strict';
+'use strong';
 
 const path = require('path');
 
 const realExecutablePathCallback = require('.');
 const test = require('tape');
 
-const isWindows = process.platform === 'win32';
+const isWinFlag = Number(process.platform === 'win32');
 
 test('realExecutablePathCallback()', t => {
-  t.plan(15);
+  t.plan(13);
 
-  t.equal(realExecutablePathCallback.name, 'realExecutablePathCallback', 'should have a function name.');
+  t.strictEqual(
+    realExecutablePathCallback.name,
+    'realExecutablePathCallback',
+    'should have a function name.'
+  );
 
   process.env.PATH = path.join('node_modules', '.bin');
 
-  realExecutablePathCallback('eslint' + '.CMD'.repeat(Number(process.platform === 'win32')), (err, filePath) => {
+  realExecutablePathCallback(`eslint${'.CMD'.repeat(isWinFlag)}`, (err, filePath) => {
     t.strictEqual(err, null, 'should not pass any errors when it successfully resolve a path.');
-    /* istanbul ignore next */
-    const expected = isWindows ?
-                     path.resolve('node_modules/.bin/eslint.CMD') :
-                     path.resolve('node_modules/eslint/bin/eslint.js');
-    t.equal(filePath, expected, 'should resolve an executable path.');
+    t.strictEqual(
+      filePath,
+      path.resolve('node_modules', ['eslint/bin/eslint.js', '.bin/eslint.CMD'][isWinFlag]),
+      'should resolve an executable path.'
+    );
   });
 
   realExecutablePathCallback('foo', null, (...args) => {
@@ -41,20 +45,6 @@ test('realExecutablePathCallback()', t => {
       err.message,
       'not found: eslint',
       'should reflect `node-which` options to the result.'
-    );
-  });
-
-  realExecutablePathCallback('eslint', {
-    cache: {
-      [path.resolve('node_modules/.bin/eslint')]: path.resolve('node_modules/tape/bin/tape'),
-      [path.resolve('node_modules/.bin/eslint.CMD')]: path.resolve('node_modules/tape/bin/tape')
-    }
-  }, (err, filePath) => {
-    t.strictEqual(err, null, 'should accept `cache` option.');
-    t.equal(
-      filePath,
-      path.resolve('node_modules/tape/bin/tape'),
-      'should pass `cache` option to fs.realpath.'
     );
   });
 
