@@ -18,11 +18,11 @@ test('realExecutablePathCallback()', t => {
 
   process.env.PATH = path.join('node_modules', '.bin');
 
-  realExecutablePathCallback(`eslint${'.CMD'.repeat(isWinFlag)}`, (err, filePath) => {
+  realExecutablePathCallback(`which${'.CMD'.repeat(isWinFlag)}`, (err, filePath) => {
     t.strictEqual(err, null, 'should not pass any errors when it successfully resolve a path.');
     t.strictEqual(
       filePath,
-      path.resolve('node_modules', ['eslint/bin/eslint.js', '.bin/eslint.CMD'][isWinFlag]),
+      path.resolve('node_modules', ['which/bin/which', '.bin/which.cmd'][isWinFlag]),
       'should resolve an executable path.'
     );
   });
@@ -40,10 +40,10 @@ test('realExecutablePathCallback()', t => {
     );
   });
 
-  realExecutablePathCallback('eslint', {path: 'foo'}, err => {
+  realExecutablePathCallback('which', {path: 'foo'}, err => {
     t.strictEqual(
       err.message,
-      'not found: eslint',
+      'not found: which',
       'should reflect `node-which` options to the result.'
     );
   });
