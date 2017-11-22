@@ -8,4 +8,4 @@ install:
   - npm uninstall --save-dev @shinnn/eslint-config-node eslint istanbul
   - npm install
 build: off
-test_script: node --strong_mode test.js
+test_script: node test.js
