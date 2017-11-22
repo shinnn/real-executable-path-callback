@@ -1,6 +1,6 @@
 'use strict';
 
-const path = require('path');
+const {join} = require('path');
 
 const realExecutablePathCallback = require('.');
 const test = require('tape');
@@ -8,41 +8,36 @@ const test = require('tape');
 const isWinFlag = Number(process.platform === 'win32');
 
 test('realExecutablePathCallback()', t => {
-  t.plan(13);
+  t.plan(11);
 
-  t.strictEqual(
-    realExecutablePathCallback.name,
-    'realExecutablePathCallback',
-    'should have a function name.'
-  );
+  process.env.PATH = join(__dirname, 'node_modules', '.bin');
 
-  process.env.PATH = path.join('node_modules', '.bin');
-
-  realExecutablePathCallback(`which${'.CMD'.repeat(isWinFlag)}`, (err, filePath) => {
-    t.strictEqual(err, null, 'should not pass any errors when it successfully resolve a path.');
-    t.strictEqual(
+  realExecutablePathCallback('which', (err, filePath) => {
+    t.equal(err, null, 'should not pass any errors when it successfully resolve a path.');
+    t.equal(
       filePath,
-      path.resolve('node_modules', ['which/bin/which', '.bin/which.cmd'][isWinFlag]), // eslint-disable-line
+      join(__dirname, 'node_modules', ['which/bin/which', '.bin/which.CMD'][isWinFlag]), // eslint-disable-line
       'should resolve an executable path.'
     );
   });
 
-  realExecutablePathCallback('foo', null, (...args) => {
-    t.strictEqual(
-      args.length,
-      1,
+  realExecutablePathCallback('foo', null, ({message}, ...restArgs) => {
+    t.equal(
+      restArgs.length,
+      0,
       'should only pass one argument to the callback when it fails to resolve a path.'
     );
-    t.strictEqual(
-      args[0].message,
+
+    t.equal(
+      message,
       'not found: foo',
       'should pass an error to the callback when it fails to resolve a path.'
     );
   });
 
-  realExecutablePathCallback('which', {path: 'foo'}, err => {
-    t.strictEqual(
-      err.message,
+  realExecutablePathCallback('which', {path: 'foo'}, ({message}) => {
+    t.equal(
+      message,
       'not found: which',
       'should reflect `node-which` options to the result.'
     );
@@ -50,26 +45,20 @@ test('realExecutablePathCallback()', t => {
 
   t.throws(
     () => realExecutablePathCallback(true, t.fail),
-    /TypeError.*true is not a string\. Expected a string of a specific executable name in the PATH\./,
+    /^TypeError.*Expected an executable name.*, but got a non-string value true \(boolean\)\./,
     'should throw a type error when the first argument is not a string.'
   );
 
   t.throws(
     () => realExecutablePathCallback('', undefined, t.fail),
-    /Error.* but received an empty string instead./,
+    /^Error.*Expected an executable name inside the PATH, but got '' \(empty string\)\./,
     'should throw an error when the first argument is an empty string.'
   );
 
   t.throws(
-    () => realExecutablePathCallback('foo', true, t.fail),
-    /TypeError.*true is not an object\. Expected a falsy value or an option object/,
-    'should throw a type error when the second argument is not a function or object.'
-  );
-
-  t.throws(
     () => realExecutablePathCallback('foo', [{}], t.fail),
-    /TypeError.* to be passed to `node-which` .*, but received an array instead\./,
-    'should throw a type error when the second argument is not a function or object.'
+    /^TypeError.*passed to `node-which`.*, but got \[ \{} ] \(array\)\./,
+    'should throw a type error when the second argument is neither a function nor an object.'
   );
 
   t.throws(
@@ -80,13 +69,13 @@ test('realExecutablePathCallback()', t => {
 
   t.throws(
     () => realExecutablePathCallback('foo', 1),
-    /TypeError.*1 is not a function\. Expected a callback function\./,
+    /^TypeError.*Expected a callback function, but got 1 \(number\)\./,
     'should throw a type error when the last argument is not a funtion.'
   );
 
   t.throws(
     () => realExecutablePathCallback(),
-    /TypeError.*undefined is not a string\. /,
+    /^TypeError.*got a non-string value undefined\./,
     'should throw a type error when the last argument is not a funtion.'
   );
 });
