@@ -14,17 +14,13 @@ const optionErrorMsg = 'Expected a falsy value or an option object to be passed 
 
 module.exports = function realExecutablePathCallback(cmd, options, cb) {
   if (typeof cmd !== 'string') {
-    throw new TypeError(
-      inspect(cmd) +
-      ' is not a string. Expected a string of a specific executable name in the PATH.'
-    );
+    throw new TypeError(inspect(cmd) +
+      ' is not a string. Expected a string of a specific executable name in the PATH.');
   }
 
   if (cmd === '') {
-    throw new Error(
-      'Expected a string of a specific executable name in the PATH, ' +
-      'but received an empty string instead.'
-    );
+    throw new Error('Expected a string of a specific executable name in the PATH, ' +
+      'but received an empty string instead.');
   }
 
   if (cb === undefined) {

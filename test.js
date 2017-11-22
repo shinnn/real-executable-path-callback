@@ -22,7 +22,7 @@ test('realExecutablePathCallback()', t => {
     t.strictEqual(err, null, 'should not pass any errors when it successfully resolve a path.');
     t.strictEqual(
       filePath,
-      path.resolve('node_modules', ['which/bin/which', '.bin/which.cmd'][isWinFlag]),
+      path.resolve('node_modules', ['which/bin/which', '.bin/which.cmd'][isWinFlag]), // eslint-disable-line
       'should resolve an executable path.'
     );
   });
