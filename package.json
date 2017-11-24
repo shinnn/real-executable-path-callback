@@ -1,6 +1,6 @@
 {
   "name": "real-executable-path-callback",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Callback style version of real-executable-path",
   "repository": "shinnn/real-executable-path-callback",
   "author": "Shinnosuke Watanabe (https://github.com/shinnn)",
