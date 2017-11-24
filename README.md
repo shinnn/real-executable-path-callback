@@ -1,11 +1,9 @@
 # real-executable-path-callback
 
-[![NPM version](https://img.shields.io/npm/v/real-executable-path-callback.svg)](https://www.npmjs.com/package/real-executable-path-callback)
+[![npm version](https://img.shields.io/npm/v/real-executable-path-callback.svg)](https://www.npmjs.com/package/real-executable-path-callback)
 [![Build Status](https://travis-ci.org/shinnn/real-executable-path-callback.svg?branch=master)](https://travis-ci.org/shinnn/real-executable-path-callback)
 [![Build status](https://ci.appveyor.com/api/projects/status/ap6060wrs8xlja88/branch/master?svg=true)](https://ci.appveyor.com/project/ShinnosukeWatanabe/real-executable-path-callback/branch/master)
 [![Coverage Status](https://img.shields.io/coveralls/shinnn/real-executable-path-callback.svg)](https://coveralls.io/github/shinnn/real-executable-path-callback)
-[![Dependency Status](https://david-dm.org/shinnn/real-executable-path-callback.svg)](https://david-dm.org/shinnn/real-executable-path-callback)
-[![devDependency Status](https://david-dm.org/shinnn/real-executable-path-callback/dev-status.svg)](https://david-dm.org/shinnn/real-executable-path-callback#info=devDependencies)
 
 [Callback](http://thenodeway.io/posts/understanding-error-first-callbacks/)-style version of [real-executable-path]:
 
@@ -26,7 +24,7 @@ realExecutablePathCallback('npm', (err, binPath) => {
 
 ## Installation
 
-[Use npm.](https://docs.npmjs.com/cli/install)
+[Use](https://docs.npmjs.com/cli/install) [npm](https://docs.npmjs.com/getting-started/what-is-npm).
 
 ```
 npm install real-executable-path-callback
@@ -40,7 +38,7 @@ const realExecutablePathCallback = require('real-executable-path-callback');
 
 ### realExecutablePathCallback(*binName* [, *options*], *callback*)
 
-*binName*: `String` (an executable name in the PATH)  
+*binName*: `string` (an executable name in the PATH)  
 *options*: `Object` ([`node-which` options](https://github.com/npm/node-which#options) except for `all`)  
 *callback*: `Function` (called after the path is resolved)
 
@@ -57,12 +55,10 @@ realExecutablePathCallback('this_cmd_is_not_installed', err => {
 
 ## Related project
 
-* [real-executable-path][real-executable-path] ([Promises/A+](https://promisesaplus.com/) version)
+* [real-executable-path] — [Promise](https://promisesaplus.com/) version
 
 ## License
 
-Copyright (c) 2015 - 2016 [Shinnosuke Watanabe](https://github.com/shinnn)
-
-Licensed under [the MIT License](./LICENSE).
+[ISC License](./LICENSE) © 2017 Shinnosuke Watanabe
 
 [real-executable-path]: https://github.com/shinnn/real-executable-path
