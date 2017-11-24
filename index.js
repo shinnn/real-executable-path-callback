@@ -1,8 +1,9 @@
 'use strict';
 
+const realpath = require('fs').realpath;
+
 const inspectWithKind = require('inspect-with-kind');
 const isPlainObj = require('is-plain-obj');
-const realpath = require('graceful-fs').realpath;
 const which = require('which');
 
 const typeErrorMsg = 'Expected an executable name inside the PATH (<string>)';
