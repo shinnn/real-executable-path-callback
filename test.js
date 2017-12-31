@@ -8,7 +8,7 @@ const test = require('tape');
 const isWinFlag = Number(process.platform === 'win32');
 
 test('realExecutablePathCallback()', t => {
-	t.plan(11);
+	t.plan(12);
 
 	process.env.PATH = join(__dirname, 'node_modules', '.bin');
 
@@ -21,7 +21,7 @@ test('realExecutablePathCallback()', t => {
 		);
 	});
 
-	realExecutablePathCallback('foo', null, ({message}, ...restArgs) => {
+	realExecutablePathCallback('foo', ({message}, ...restArgs) => {
 		t.equal(
 			restArgs.length,
 			0,
@@ -46,36 +46,42 @@ test('realExecutablePathCallback()', t => {
 	t.throws(
 		() => realExecutablePathCallback(true, t.fail),
 		/^TypeError.*Expected an executable name.*, but got a non-string value true \(boolean\)\./,
-		'should throw a type error when the first argument is not a string.'
+		'should throw an error when the first argument is not a string.'
 	);
 
 	t.throws(
 		() => realExecutablePathCallback('', undefined, t.fail),
-		/^Error.*Expected an executable name inside the PATH, but got '' \(empty string\)\./,
+		/^Error.*Expected an executable name inside the PATH, .*but got '' \(empty string\)\./,
 		'should throw an error when the first argument is an empty string.'
 	);
 
 	t.throws(
 		() => realExecutablePathCallback('foo', [{}], t.fail),
 		/^TypeError.*passed to `node-which`.*, but got \[ \{} ] \(array\)\./,
-		'should throw a type error when the second argument is neither a function nor an object.'
+		'should throw an error when the second argument is neither a function nor an object.'
 	);
 
 	t.throws(
 		() => realExecutablePathCallback('foo', {all: true}, t.fail),
-		/Error.*`all` option is not supported\./,
+		/Error.*`all` option is not supported, but a value true \(boolean\) was provided\./,
 		'should throw an error when it takes `all` option.'
 	);
 
 	t.throws(
 		() => realExecutablePathCallback('foo', 1),
 		/^TypeError.*Expected a callback function, but got 1 \(number\)\./,
-		'should throw a type error when the last argument is not a funtion.'
+		'should throw an error when the last argument is not a funtion.'
 	);
 
 	t.throws(
 		() => realExecutablePathCallback(),
-		/^TypeError.*got a non-string value undefined\./,
-		'should throw a type error when the last argument is not a funtion.'
+		/^RangeError.*Expected 2 or 3 arguments \(<string>\[, <Object>], <Function>\), but got no arguments\./,
+		'should throw an error when it takes no arguments.'
+	);
+
+	t.throws(
+		() => realExecutablePathCallback(1, 2, 3, 4),
+		/^RangeError.*Expected 2 or 3 arguments \(<string>\[, <Object>], <Function>\), but got 4 arguments\./,
+		'should throw an error when it takes too many arguments.'
 	);
 });
