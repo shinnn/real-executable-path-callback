@@ -2,7 +2,6 @@
 
 [![npm version](https://img.shields.io/npm/v/real-executable-path-callback.svg)](https://www.npmjs.com/package/real-executable-path-callback)
 [![Build Status](https://travis-ci.com/shinnn/real-executable-path-callback.svg?branch=master)](https://travis-ci.com/shinnn/real-executable-path-callback)
-[![Build status](https://ci.appveyor.com/api/projects/status/ap6060wrs8xlja88/branch/master?svg=true)](https://ci.appveyor.com/project/ShinnosukeWatanabe/real-executable-path-callback/branch/master)
 [![Coverage Status](https://img.shields.io/coveralls/shinnn/real-executable-path-callback.svg)](https://coveralls.io/github/shinnn/real-executable-path-callback)
 
 [Callback](https://thenodeway.io/posts/understanding-error-first-callbacks/)-style version of [real-executable-path]:
